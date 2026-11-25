@@ -40,7 +40,17 @@ npm run build      # 产物输出到 dist/
 npm run preview    # 本地预览生产构建
 ```
 
-### Gitee Pages 部署
+### GitHub Actions 自动化部署（CI/CD）
+
+推送到 `master` 分支后，`.github/workflows/deploy.yml` 会自动完成：安装依赖 → 以仓库名作为子路径 base 构建 → 生成 `404.html` 回退页 → 发布到 `gh-pages` 分支。
+
+首次使用需在仓库 **Settings → Pages** 中把 Source 设为 `gh-pages` 分支，站点地址为：
+
+```
+https://<用户名>.github.io/<仓库名>/
+```
+
+### Gitee Pages 部署（可选）
 
 站点的访问地址形如 `https://<用户名>.gitee.io/<仓库名>/`，属于**子路径**部署，因此构建时必须指定 base：
 
@@ -57,5 +67,4 @@ VITE_BASE=/task-hub/ npm run build
 
 ### 已知限制
 
-- GitHub Actions 工作流在案例文档中仅作示例，本仓库实际采用本地构建 + Gitee Pages 发布。
 - 站点为 HTML5 History 路由，直接刷新子路由（如 `/task-hub/login`）时部分静态托管会返回 404；构建脚本已额外输出 `404.html`（内容同 `index.html`）以兼容这种情况。
